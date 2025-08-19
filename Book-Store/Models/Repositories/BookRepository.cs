@@ -10,15 +10,15 @@ namespace Book_Store.Models.Repositories
             {
                 new Book
                 {
-                    Id = 1,Title = "C# Programming",Description = "A comprehensive guide to C# programming.",
+                    Id = 1,Title = "C# Programming",Description = "A comprehensive guide to C# programming.", Author = new Author()
                 },
                 new Book
                 {
-                    Id = 2,Title = "PHP Programming",Description = "A comprehensive guide to PHP programming.",
+                    Id = 2,Title = "PHP Programming",Description = "A comprehensive guide to PHP programming.", Author = new Author()
                 },
                 new Book
                 {
-                    Id = 3,Title = "JAVA Programming",Description = "A comprehensive guide to JAVA programming.",
+                    Id = 3,Title = "JAVA Programming",Description = "A comprehensive guide to JAVA programming.", Author = new Author()
                 },
             };
             

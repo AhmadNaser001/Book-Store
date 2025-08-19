@@ -1,0 +1,63 @@
+﻿@model Book_Store.ViewModels.BookAuthorViewModel
+
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Card -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">✏ Edit Book</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Bookid" class="form-label fw-bold"></label>
+                            <input readonly asp-for="Bookid" class="form-control" />
+                            <span asp-validation-for="Bookid" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Title" class="form-label fw-bold"></label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter Book Title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="form-label fw-bold"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter Book Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="AuthorId" class="form-label fw-bold"></label>
+                            <select asp-for="AuthorId" class="form-control"
+                                    asp-items="@(new SelectList(Model.Authors, "Id", "FullName"))">
+                            </select>
+                            <span asp-validation-for="AuthorId" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary">⬅ Back to List</a>
+                            <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
