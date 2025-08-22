@@ -19,6 +19,7 @@
                         <th>@Html.DisplayNameFor(model => model.Title)</th>
                         <th>@Html.DisplayNameFor(model => model.Description)</th>
                         <th>@Html.DisplayNameFor(model => model.Author.FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.ImageUrl)</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
@@ -30,6 +31,11 @@
                             <td>@Html.DisplayFor(modelItem => item.Title)</td>
                             <td>@Html.DisplayFor(modelItem => item.Description)</td>
                             <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
+                            <td>
+                                @if(item.ImageUrl !=null){
+                                    <img src="~/uploads/@item.ImageUrl" style="width:64px" class="img-thumbnail" />
+                                }
+                            </td>
                             <td class="text-end">
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">✏ Edit</a>
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1 text-white">🔍 Details</a>

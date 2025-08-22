@@ -42,6 +42,19 @@
                         <dd class="col-sm-9">
                             @Html.DisplayFor(model => model.Author.FullName)
                         </dd>
+                        @if(Model.ImageUrl != null)
+                        {
+
+                            <dt class="col-sm-3 fw-bold text-secondary">
+                                Image
+                            </dt>
+                            <dd class="col-sm-9">
+                                <img src="~/uploads/@(Model.ImageUrl ?? "default.png")"
+                                     alt="Book Cover"
+                                     style="width:120px; height:auto;"
+                                     class="img-thumbnail shadow-sm" />
+                            </dd>
+                        }
                     </dl>
                 </div>
                 <div class="card-footer d-flex justify-content-between">

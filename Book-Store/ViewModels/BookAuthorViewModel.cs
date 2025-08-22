@@ -5,7 +5,7 @@ namespace Book_Store.ViewModels
 {
     public class BookAuthorViewModel
     {
-        public int Bookid { get; set; }
+        public int BookId { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -19,5 +19,8 @@ namespace Book_Store.ViewModels
         public string Description { get; set; }
         public int AuthorId { get; set; }
         public List<Author> Authors { get; set; }
+
+        public IFormFile File { get; set;}
+        public string ImageUrl { get; set; }
     }
 }

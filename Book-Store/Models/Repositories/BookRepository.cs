@@ -10,15 +10,27 @@ namespace Book_Store.Models.Repositories
             {
                 new Book
                 {
-                    Id = 1,Title = "C# Programming",Description = "A comprehensive guide to C# programming.", Author = new Author()
+                    Id = 1,
+                    Title = "C# Programming",
+                    Description = "A comprehensive guide to C# programming.",
+                    ImageUrl = "csharp.jpg",
+                    Author = new Author{Id=1}
                 },
                 new Book
                 {
-                    Id = 2,Title = "PHP Programming",Description = "A comprehensive guide to PHP programming.", Author = new Author()
+                    Id = 2,
+                    Title = "PHP Programming",
+                    Description = "A comprehensive guide to PHP programming.",
+                    ImageUrl = "php.png",
+                    Author = new Author{Id=2}
                 },
                 new Book
                 {
-                    Id = 3,Title = "JAVA Programming",Description = "A comprehensive guide to JAVA programming.", Author = new Author()
+                    Id = 3,
+                    Title = "JAVA Programming",
+                    Description = "A comprehensive guide to JAVA programming.",
+                    ImageUrl = "java.png",
+                    Author = new Author{Id=3}
                 },
             };
             
@@ -56,6 +68,7 @@ namespace Book_Store.Models.Repositories
             book.Title = newBook.Title;
             book.Description = newBook.Description;
             book.Author = newBook.Author; 
+            book.ImageUrl = newBook.ImageUrl; 
         }
     }
 }

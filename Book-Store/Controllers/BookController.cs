@@ -11,11 +11,17 @@ namespace Book_Store.Controllers
     {
         private readonly IBookstoreRepository<Book> bookRepository;
         private readonly IBookstoreRepository<Author> authorRepository;
+        private readonly IWebHostEnvironment hosting;
 
-        public BookController(IBookstoreRepository<Book> bookRepository, IBookstoreRepository<Author> authorRepository)
+
+
+        public BookController(IBookstoreRepository<Book> bookRepository, IBookstoreRepository<Author> authorRepository,
+            IWebHostEnvironment hosting)
         {
             this.bookRepository = bookRepository;
             this.authorRepository = authorRepository;
+            this.hosting = hosting;
+
         }
         // GET: BookController
         public ActionResult Index()
@@ -52,6 +58,15 @@ namespace Book_Store.Controllers
             {
                 try
                 {
+                    string fileName = string.Empty;
+                    if (model.File != null)
+                    {
+                        string uploads = Path.Combine(hosting.WebRootPath, "uploads");
+                        fileName = model.File.FileName;
+                        string fullPath = Path.Combine(uploads, fileName);
+                        model.File.CopyTo(new FileStream(fullPath, FileMode.Create));
+                    }
+
                     if (model.AuthorId == -1)
                     {
                         ViewBag.Message = "Please select an author From The List !";
@@ -62,10 +77,11 @@ namespace Book_Store.Controllers
                     var author = authorRepository.Find(model.AuthorId);
                     Book book = new Book
                     {
-                        Id = model.Bookid,
+                        Id = model.BookId,
                         Title = model.Title,
                         Description = model.Description,
-                        Author = author
+                        Author = author,
+                        ImageUrl = fileName
                     };
                     bookRepository.Add(book);
                     return RedirectToAction(nameof(Index));
@@ -88,11 +104,13 @@ namespace Book_Store.Controllers
 
             var viewModel = new BookAuthorViewModel
             {
-                Bookid = book.Id,
+                BookId = book.Id,
                 Title = book.Title,
                 Description = book.Description,
                 AuthorId = authorId,
-                Authors = authorRepository.List().ToList()
+                Authors = authorRepository.List().ToList(),
+                ImageUrl = book.ImageUrl
+
             };
             return View(viewModel);
         }
@@ -104,14 +122,37 @@ namespace Book_Store.Controllers
         {
             try
             {
+                string fileName = string.Empty;
+                if (viewModel.File != null)
+                {
+                    string uploads = Path.Combine(hosting.WebRootPath, "uploads");
+                    fileName = viewModel.File.FileName;
+                    string fullPath = Path.Combine(uploads, fileName);
+                    //Delete Old File
+                    string oldFileName = bookRepository.Find(viewModel.BookId).ImageUrl;
+                    string oldFullPath = Path.Combine(uploads, oldFileName);
+
+                    if (fullPath != oldFullPath)
+                    {
+                        System.IO.File.Delete(oldFullPath);
+                        //Save New File
+                        viewModel.File.CopyTo(new FileStream(fullPath, FileMode.Create));
+                    }
+
+                }
+
+
+
                 var author = authorRepository.Find(viewModel.AuthorId);
                 Book book = new Book
                 {
                     Title = viewModel.Title,
                     Description = viewModel.Description,
-                    Author = author
+                    Author = author,
+                    ImageUrl = fileName
+
                 };
-                bookRepository.Update(viewModel.Bookid, book);
+                bookRepository.Update(viewModel.BookId, book);
                 return RedirectToAction(nameof(Index));
             }
             catch

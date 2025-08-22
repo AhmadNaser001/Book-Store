@@ -14,14 +14,14 @@
                     <h4 class="mb-0">✏ Edit Book</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Edit">
+                    <form asp-action="Edit" enctype="multipart/form-data">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="form-group mb-3">
-                            <label asp-for="Bookid" class="form-label fw-bold"></label>
-                            <input readonly asp-for="Bookid" class="form-control" />
-                            <span asp-validation-for="Bookid" class="text-danger"></span>
+                            <label asp-for="BookId" class="form-label fw-bold"></label>
+                            <input readonly asp-for="BookId" class="form-control" />
+                            <span asp-validation-for="BookId" class="text-danger"></span>
                         </div>
 
                         <div class="form-group mb-3">
@@ -34,6 +34,16 @@
                             <label asp-for="Description" class="form-label fw-bold"></label>
                             <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter Book Description"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Upload Cover</label>
+                            <input type="file" asp-for="File" class="form-control" />
+                            <span asp-validation-for="File" class="text-danger"></span>
+
+                            <div class="mt-3 text-center">
+                                <img src="~/uploads/@Model.ImageUrl" class="img-fluid rounded shadow" style="max-width:200px;" />
+                            </div>
                         </div>
 
                         <div class="form-group mb-4">
@@ -57,7 +67,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_Validation" />
 }
