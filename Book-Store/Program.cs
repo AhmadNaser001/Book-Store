@@ -1,11 +1,18 @@
 using Book_Store.Models;
 using Book_Store.Models.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IBookstoreRepository<Author>, AuthorRepository>();
-builder.Services.AddSingleton<IBookstoreRepository<Book>, BookRepository>();
+builder.Services.AddScoped<IBookstoreRepository<Author>, AuthorDbRepository>();
+builder.Services.AddScoped<IBookstoreRepository<Book>, BookDbRepository>();
+builder.Services.AddDbContext<BookstoreDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
+});
 
 
 var app = builder.Build();

@@ -123,11 +123,13 @@ namespace Book_Store.Controllers
             try
             {
                 string fileName = string.Empty;
+
                 if (viewModel.File != null)
                 {
                     string uploads = Path.Combine(hosting.WebRootPath, "uploads");
                     fileName = viewModel.File.FileName;
                     string fullPath = Path.Combine(uploads, fileName);
+
                     //Delete Old File
                     string oldFileName = bookRepository.Find(viewModel.BookId).ImageUrl;
                     string oldFullPath = Path.Combine(uploads, oldFileName);
